@@ -11,8 +11,10 @@ Con el siguiente comando puedes encontrar una lista completa de los timezones so
 for tz in pytz:
   print(tz)
 ```
-for tz in pytz:
-print(tz)
 
 Y eso te generará toda una lista de timezones soportadas.
 Adicionalmente en el siguiente link está un standard de las diferentes zonas horarias para que puedas buscar la zona horaria donde te encuentres.
+
+[Base de datos de diferentes zonas horarias](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones)
+
+Por último el código imprime en pantalla las zonas horarias, así como un formato específico si deseamos que se note la zona horaria en la que se está tomando cada timestamp.
