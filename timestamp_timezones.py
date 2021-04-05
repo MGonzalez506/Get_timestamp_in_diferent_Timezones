@@ -5,6 +5,9 @@ import os
 # Limpia lo que tenga el terminal
 os.system('clear')
 
+# Solamente para imprimir un título
+print("\n######### Obtener timestamp con zonas horarias #########\n\n")
+
 # Formato para zona horaria estándar UTC
 UTC_Format = pytz.utc
 
