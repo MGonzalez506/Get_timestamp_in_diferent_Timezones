@@ -1,34 +1,38 @@
-from datetime import datetime
-import pytz
+#!/usr/bin/python
+# -*- coding: UTF-8 -*-
+import sys
 import os
+import threading
+import traceback
+import time
+import signal
+import fcntl
+import string
+import re
 
-# Limpia lo que tenga el terminal
-os.system('clear')
+import pytz
 
-# Solamente para imprimir un título
-print("\n######### Obtener timestamp con zonas horarias #########\n\n")
+from datetime import datetime
+from pytz import timezone
 
-# Formato para zona horaria estándar UTC
-UTC_Format = pytz.utc
+CRC_Format = 'America/Regina'
+Phoenix_Format = 'America/Phoenix'
 
-# Formato para zona horaria específica ('En este caso America/Regina')
-CRC_Format = pytz.timezone('America/Regina')
-
-# Obtiene el primer Timestamp con el formato UTC definido previamente
-t1 = datetime.now(UTC_Format)
-# Obtiene el segundo Timestamp con el formato America/Regina definido previamente
-t2 = datetime.now(CRC_Format)
-
-# Imprime el primer valor del Timestamp en formato UTC
-print("Timestamp en formato UTC: \t\t",t1)
-# Imprime el segundo valor del Timestamp en formato America/Regina
-print("Timestamp en formato America/Regina: \t",t2)
-
-# Imprime los valores con un formato específico, mostrando la zona horaria y 
-# adicionalmente la cantidad de horas que representa respecto al estándar UTC
-print("\n\nTimestamp con formato:\t\t\t",
-	t1.strftime('%Y:%m:%d %H:%M:%S.%f %Z %z'))
-
-print("Timestamp con formato: \t\t\t",
-	t2.strftime('%Y:%m:%d %H:%M:%S.%f %Z %z'))
-print("\n\n")
+if __name__ == "__main__":
+	# Solamente para imprimir un título
+	os.write(sys.stdout.fileno(), "\n######### Obtener timestamp con zonas horarias #########\n\n".encode('utf-8'))
+	#Establecer el formato de timestamp que se desea:
+	timestamp_format = "%Y-%m-%d %H:%M:%S.%f"
+	#Se obtiene time_now en UTC en formato string
+	time_now_UTC = datetime.utcnow().isoformat(timespec='microseconds')
+	#Por lo tanto hay que convertirla de str a datetime.datetime
+	t_UTC = datetime.strptime(time_now_UTC, "%Y-%m-%dT%H:%M:%S.%f")
+	#Convertir time_now_UTC a zona horaria de America/Regina por ejemplo:
+	time_now_CRC = t_UTC.replace(tzinfo=pytz.UTC).astimezone(timezone(CRC_Format)).strftime(timestamp_format)
+	time_now_Phoenix = t_UTC.replace(tzinfo=pytz.UTC).astimezone(timezone(Phoenix_Format)).strftime(timestamp_format)
+	os.write(sys.stdout.fileno(), ("Tiempo en UTC: \t\t\t\t" + str(time_now_UTC)).encode('utf-8'))
+	os.write(sys.stdout.fileno(), " --> Notar la T para diferencias entre fecha y hora\n".encode('utf-8'))
+	os.write(sys.stdout.fileno(), ("Tiempo en America/Regina: \t" + str(time_now_CRC)).encode('utf-8'))
+	os.write(sys.stdout.fileno(), " --> Esta conversión ya no tiene T entre fecha y hora\n".encode('utf-8'))
+	os.write(sys.stdout.fileno(), ("Tiempo en Phoenix: \t\t\t" + str(time_now_Phoenix)).encode('utf-8'))
+	os.write(sys.stdout.fileno(), " --> Esta conversión ya no tiene T entre fecha y hora\n".encode('utf-8'))

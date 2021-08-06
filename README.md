@@ -1,20 +1,23 @@
+# Paquetes necesarios
+```
+pip install pytz
+```
+
 # Get_timestamp_in_diferent_Timezones
 Normalmente es buena práctica almacenar en una base de datos el timestamp en UTC, sin embargo dependiendo de su zona horaria es útil convertir UTC a su Timezone determinado.
 
-Primeramente instala la librería pytz con el comando **pip install pytz**, una librería sencilla de interpretar que permite entre muchas otras funciones, convertir timezones de una a otra.
+Pytz es un paquete sencillo de interpretar que permite entre muchas otras funciones, convertir timezones de una a otra.
 
-Este código coloca la variable **UTC_Format**, para luego obtener el tiempo en UTC, luego una variable **CRC_Format** con el formato de la zona horaria donde usted se encuentra, como ejemplo está la zona horaria 'America/Regina' que respecto al UTC, son 6 horas menos. 
+Este código coloca la variable **CRC_Format** con el formato que se utiliza en Costa Rica para obtener la hora.
+Y adicionalmente la variable **Phoenix_Format**, con el formato que se utiliza en la ciudad de Phoenix Arizona.
 
-Con el siguiente comando puedes encontrar una lista completa de los timezones soportados por pytz:
+Utilizando el tiempo actual en UTC y estas dos variables se convierte el tiempo UTC en estas dos zonas horarias y se imprime en pantalla.
 
+Adicionalmente en el siguiente link se pueden observar las diferentes zonas horarias de la base de datos tz:
+[Lista de zonas horarias según base de datos TZ](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones)
+
+Y también si se requiere, con el siguiente comando se pueden observar todas las zonas horarias soportadas por pytz
 ```python
 for tz in pytz:
   print(tz)
 ```
-
-Y eso te generará toda una lista de timezones soportadas.
-Adicionalmente en el siguiente link está un standard de las diferentes zonas horarias para que puedas buscar la zona horaria donde te encuentres.
-
-[Base de datos de diferentes zonas horarias](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones)
-
-Por último el código imprime en pantalla las zonas horarias, así como un formato específico si deseamos que se note la zona horaria en la que se está tomando cada timestamp.
