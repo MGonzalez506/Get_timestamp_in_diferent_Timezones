@@ -15,7 +15,7 @@ import pytz
 from datetime import datetime
 from pytz import timezone
 
-CRC_Format = 'America/Regina'
+CRC_Format = 'America/Costa_Rica'
 Phoenix_Format = 'America/Phoenix'
 
 if __name__ == "__main__":
@@ -30,9 +30,10 @@ if __name__ == "__main__":
 	#Convertir time_now_UTC a zona horaria de America/Regina por ejemplo:
 	time_now_CRC = t_UTC.replace(tzinfo=pytz.UTC).astimezone(timezone(CRC_Format)).strftime(timestamp_format)
 	time_now_Phoenix = t_UTC.replace(tzinfo=pytz.UTC).astimezone(timezone(Phoenix_Format)).strftime(timestamp_format)
+	os.write(sys.stdout.fileno(), ("El número de día UTC hoy es: \t\t" + str(t_UTC.isoweekday()) + "\n").encode('utf-8'))
 	os.write(sys.stdout.fileno(), ("Tiempo en UTC: \t\t\t\t" + str(time_now_UTC)).encode('utf-8'))
 	os.write(sys.stdout.fileno(), " --> Notar la T para diferencias entre fecha y hora\n".encode('utf-8'))
-	os.write(sys.stdout.fileno(), ("Tiempo en America/Regina: \t" + str(time_now_CRC)).encode('utf-8'))
+	os.write(sys.stdout.fileno(), ("Tiempo en America/Regina: \t\t" + str(time_now_CRC)).encode('utf-8'))
 	os.write(sys.stdout.fileno(), " --> Esta conversión ya no tiene T entre fecha y hora\n".encode('utf-8'))
 	os.write(sys.stdout.fileno(), ("Tiempo en Phoenix: \t\t\t" + str(time_now_Phoenix)).encode('utf-8'))
 	os.write(sys.stdout.fileno(), " --> Esta conversión ya no tiene T entre fecha y hora\n".encode('utf-8'))
