@@ -12,11 +12,39 @@ import re
 
 import pytz
 
-from datetime import datetime
+from datetime import datetime, timedelta
+from dateutil.relativedelta import relativedelta
 from pytz import timezone
 
 CRC_Format = 'America/Costa_Rica'
 Phoenix_Format = 'America/Phoenix'
+
+def get_year(t_now, t_stamp_format):
+	timestamp = datetime.strptime(t_now, t_stamp_format) if isinstance(t_now, str) else t_now
+	year = timestamp.year
+	return str(year)
+
+def get_month(t_now, t_stamp_format):
+	timestamp = datetime.strptime(t_now, t_stamp_format) if isinstance(t_now, str) else t_now
+	month = timestamp.month
+	return str(month)
+
+def get_year_dif(t_now, t_stamp_format, t_diff):
+	timestamp = datetime.strptime(t_now, t_stamp_format) if isinstance(t_now, str) else t_now
+	other_year = timestamp + relativedelta(years=t_diff)
+	return str(other_year)
+
+def get_month_dif(t_now, t_stamp_format, t_diff):
+	timestamp = datetime.strptime(t_now, t_stamp_format) if isinstance(t_now, str) else t_now
+	other_year = timestamp + relativedelta(months=t_diff)
+	return str(other_year)
+
+def get_TStamp_with_TZone_from_UTC(t_now, t_stamp_format, zona_horaria):
+	timestamp = datetime.strptime(t_now, t_stamp_format) if isinstance(t_now, str) else t_now
+	return str(timestamp.replace(tzinfo=pytz.UTC).astimezone(timezone(zona_horaria)).strftime(t_stamp_format))
+
+def get_UTC_Now(t_stamp_format):
+	return datetime.strptime(datetime.utcnow().isoformat(timespec='microseconds'), "%Y-%m-%dT%H:%M:%S.%f").strftime(t_stamp_format)
 
 def join_hour_to_today(hour):
 	global CRC_Format
@@ -58,20 +86,31 @@ if __name__ == "__main__":
 	#Establecer el formato de timestamp que se desea:
 	timestamp_format = "%Y-%m-%d %H:%M:%S.%f"
 	#Se obtiene time_now en UTC en formato string
-	time_now_UTC = datetime.utcnow().isoformat(timespec='microseconds')
-	print(timestamp_hour_and_weekday("America/New_York"))
+	time_now_UTC = get_UTC_Now(timestamp_format)
+	print(get_timestamp_and_weekday("America/New_York"))
 	print("\n\n")
 	#Por lo tanto hay que convertirla de str a datetime.datetime
-	t_UTC = datetime.strptime(time_now_UTC, "%Y-%m-%dT%H:%M:%S.%f")
+	t_UTC = datetime.strptime(time_now_UTC, "%Y-%m-%d %H:%M:%S.%f")
 	#Convertir time_now_UTC a zona horaria de America/Regina por ejemplo:
 	time_now_CRC = t_UTC.replace(tzinfo=pytz.UTC).astimezone(timezone(CRC_Format)).strftime(timestamp_format)
 	time_now_Phoenix = t_UTC.replace(tzinfo=pytz.UTC).astimezone(timezone(Phoenix_Format)).strftime(timestamp_format)
-	os.write(sys.stdout.fileno(), ("El número de día UTC hoy es: \t\t" + str(t_UTC.isoweekday()) + "\n").encode('utf-8'))
-	os.write(sys.stdout.fileno(), ("Tiempo en UTC: \t\t\t\t" + str(time_now_UTC)).encode('utf-8'))
-	os.write(sys.stdout.fileno(), " --> Notar la T para diferencias entre fecha y hora\n".encode('utf-8'))
-	os.write(sys.stdout.fileno(), ("Tiempo en America/Regina: \t\t" + str(time_now_CRC)).encode('utf-8'))
+	os.write(sys.stdout.fileno(), ("El número de día UTC hoy es: \t" + str(t_UTC.isoweekday()) + "\n").encode('utf-8'))
+	os.write(sys.stdout.fileno(), ("Tiempo en UTC: \t\t\t\t\t" + str(time_now_UTC)).encode('utf-8'))
+	os.write(sys.stdout.fileno(), " --> Notar la T para diferencias entre fecha y hora".encode('utf-8'))
+	os.write(sys.stdout.fileno(), ("\nTiempo en America/Regina: \t\t" + str(time_now_CRC)).encode('utf-8'))
 	os.write(sys.stdout.fileno(), " --> Esta conversión ya no tiene T entre fecha y hora\n".encode('utf-8'))
-	os.write(sys.stdout.fileno(), ("Tiempo en Phoenix: \t\t\t" + str(time_now_Phoenix)).encode('utf-8'))
+	os.write(sys.stdout.fileno(), ("\nTiempo en America/Costa_Rica: \t" + get_TStamp_with_TZone_from_UTC(t_UTC, timestamp_format, 'America/Costa_Rica')).encode('utf-8'))
+	os.write(sys.stdout.fileno(), ("\nTiempo en Phoenix: \t\t\t\t" + str(time_now_Phoenix)).encode('utf-8'))
 	os.write(sys.stdout.fileno(), " --> Esta conversión ya no tiene T entre fecha y hora\n".encode('utf-8'))
-	os.write(sys.stdout.fileno(), ("\nSi le ingreso la hora 12:12:20,\nautomatico me sale la fecha de hoy\ny la hora: \t\t\t\t" + str(join_hour_to_today("12:12:20"))).encode('utf-8'))
-	os.write(sys.stdout.fileno(), (" --> Se le envía una hora y él la convierte a datetime con la fecha de hoy"  + "\n\n\n\n\n").encode('utf-8'))
+	os.write(sys.stdout.fileno(), ("\n\n--> Se le envía una hora y él la convierte a datetime con la fecha de hoy").encode('utf-8'))
+	os.write(sys.stdout.fileno(), ("\nSi le ingreso la hora 12:12:20.\nAutomático me sale la fecha de hoy y la hora: " + str(join_hour_to_today("12:12:20"))).encode('utf-8'))
+	os.write(sys.stdout.fileno(), ("\n\nEl año actual es: " + get_year(time_now_CRC, timestamp_format)).encode('utf-8'))
+	os.write(sys.stdout.fileno(), ("\nEl mes actual es: " + get_month(time_now_CRC, timestamp_format)).encode('utf-8'))
+	# Diferencia de X años al año actual
+	diferencia_de_anos = 4
+	os.write(sys.stdout.fileno(), ("\n\n" + str(diferencia_de_anos) + " años representa el timestamp: " + get_year_dif(time_now_CRC, timestamp_format, diferencia_de_anos)).encode('utf-8'))
+	os.write(sys.stdout.fileno(), ("\nEl año resultante es: " + get_year(get_year_dif(time_now_CRC, timestamp_format, diferencia_de_anos), timestamp_format)).encode('utf-8'))
+	diferencia_de_meses = -12
+	os.write(sys.stdout.fileno(), ("\n\n" + str(diferencia_de_meses) + " meses representa el timestamp: " + get_month_dif(t_UTC, timestamp_format, diferencia_de_meses)).encode('utf-8'))
+	os.write(sys.stdout.fileno(), ("\nEl mes resultante es: " + get_month(get_month_dif(time_now_CRC, timestamp_format, diferencia_de_meses), timestamp_format)).encode('utf-8'))
+	os.write(sys.stdout.fileno(), ("\n\n\n\n").encode('utf-8'))
