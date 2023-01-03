@@ -39,6 +39,11 @@ def get_month_dif(t_now, t_stamp_format, t_diff):
 	other_year = timestamp + relativedelta(months=t_diff)
 	return str(other_year)
 
+def get_month_dif_beginning(t_now, t_stamp_format, t_diff):
+	timestamp = datetime.strptime(t_now, t_stamp_format) if isinstance(t_now, str) else t_now
+	other_year = timestamp + relativedelta(months=t_diff)
+	return str(other_year.replace(day=1, hour=0, minute=0, second=0, microsecond=0))
+
 def get_TStamp_with_TZone_from_UTC(t_now, t_stamp_format, zona_horaria):
 	timestamp = datetime.strptime(t_now, t_stamp_format) if isinstance(t_now, str) else t_now
 	return str(timestamp.replace(tzinfo=pytz.UTC).astimezone(timezone(zona_horaria)).strftime(t_stamp_format))
@@ -110,7 +115,8 @@ if __name__ == "__main__":
 	diferencia_de_anos = 4
 	os.write(sys.stdout.fileno(), ("\n\n" + str(diferencia_de_anos) + " años representa el timestamp: " + get_year_dif(time_now_CRC, timestamp_format, diferencia_de_anos)).encode('utf-8'))
 	os.write(sys.stdout.fileno(), ("\nEl año resultante es: " + get_year(get_year_dif(time_now_CRC, timestamp_format, diferencia_de_anos), timestamp_format)).encode('utf-8'))
-	diferencia_de_meses = -12
+	diferencia_de_meses = -1
 	os.write(sys.stdout.fileno(), ("\n\n" + str(diferencia_de_meses) + " meses representa el timestamp: " + get_month_dif(t_UTC, timestamp_format, diferencia_de_meses)).encode('utf-8'))
 	os.write(sys.stdout.fileno(), ("\nEl mes resultante es: " + get_month(get_month_dif(time_now_CRC, timestamp_format, diferencia_de_meses), timestamp_format)).encode('utf-8'))
+	os.write(sys.stdout.fileno(), ("\nEl inicio de este cambio de mes es: " + get_month_dif_beginning(time_now_CRC, timestamp_format, diferencia_de_meses)).encode('utf-8'))
 	os.write(sys.stdout.fileno(), ("\n\n\n\n").encode('utf-8'))
