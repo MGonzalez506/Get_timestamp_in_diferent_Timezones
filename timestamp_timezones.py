@@ -19,33 +19,33 @@ from pytz import timezone
 CRC_Timezone = 'America/Costa_Rica'
 Phoenix_Format = 'America/Phoenix'
 
-def get_year(t_now, t_stamp_format):
-	timestamp = datetime.strptime(t_now, t_stamp_format) if isinstance(t_now, str) else t_now
+def get_year(t_stamp, t_stamp_format):
+	timestamp = datetime.strptime(t_stamp, t_stamp_format) if isinstance(t_stamp, str) else t_stamp
 	year = timestamp.year
 	return str(year)
 
-def get_month(t_now, t_stamp_format):
-	timestamp = datetime.strptime(t_now, t_stamp_format) if isinstance(t_now, str) else t_now
+def get_month(t_stamp, t_stamp_format):
+	timestamp = datetime.strptime(t_stamp, t_stamp_format) if isinstance(t_stamp, str) else t_stamp
 	month = timestamp.month
 	return str(month)
 
-def get_year_dif(t_now, t_stamp_format, t_diff):
-	timestamp = datetime.strptime(t_now, t_stamp_format) if isinstance(t_now, str) else t_now
+def get_year_dif(t_stamp, t_stamp_format, t_diff):
+	timestamp = datetime.strptime(t_stamp, t_stamp_format) if isinstance(t_stamp, str) else t_stamp
 	other_year = timestamp + relativedelta(years=t_diff)
 	return str(other_year)
 
-def get_month_dif(t_now, t_stamp_format, t_diff):
-	timestamp = datetime.strptime(t_now, t_stamp_format) if isinstance(t_now, str) else t_now
+def get_month_dif(t_stamp, t_stamp_format, t_diff):
+	timestamp = datetime.strptime(t_stamp, t_stamp_format) if isinstance(t_stamp, str) else t_stamp
 	other_year = timestamp + relativedelta(months=t_diff)
 	return str(other_year)
 
-def get_month_dif_beginning(t_now, t_stamp_format, t_diff):
-	timestamp = datetime.strptime(t_now, t_stamp_format) if isinstance(t_now, str) else t_now
+def get_month_dif_beginning(t_stamp, t_stamp_format, t_diff):
+	timestamp = datetime.strptime(t_stamp, t_stamp_format) if isinstance(t_stamp, str) else t_stamp
 	other_year = timestamp + relativedelta(months=t_diff)
 	return str(other_year.replace(day=1, hour=0, minute=0, second=0, microsecond=0))
 
-def get_TStamp_with_TZone_from_UTC(t_now, t_stamp_format, zona_horaria):
-	timestamp = datetime.strptime(t_now, t_stamp_format) if isinstance(t_now, str) else t_now
+def get_TStamp_with_TZone_from_UTC(t_stamp, t_stamp_format, zona_horaria):
+	timestamp = datetime.strptime(t_stamp, t_stamp_format) if isinstance(t_stamp, str) else t_stamp
 	return str(timestamp.replace(tzinfo=pytz.UTC).astimezone(timezone(zona_horaria)).strftime(t_stamp_format))
 
 def get_UTC_Now(t_stamp_format):
