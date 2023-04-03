@@ -16,7 +16,7 @@ from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
 from pytz import timezone
 
-CRC_Format = 'America/Costa_Rica'
+CRC_Timezone = 'America/Costa_Rica'
 Phoenix_Format = 'America/Phoenix'
 
 def get_year(t_now, t_stamp_format):
@@ -52,13 +52,13 @@ def get_UTC_Now(t_stamp_format):
 	return datetime.strptime(datetime.utcnow().isoformat(timespec='microseconds'), "%Y-%m-%dT%H:%M:%S.%f").strftime(t_stamp_format)
 
 def join_hour_to_today(hour):
-	global CRC_Format
+	global CRC_Timezone
 	#Ingresa la hora a la que quieres añadir a la fecha
 	#Sale el datetime correspondiente que se ha creado
 
 	time_now_UTC = datetime.utcnow().isoformat(timespec='microseconds')
 	t_UTC = datetime.strptime(time_now_UTC, "%Y-%m-%dT%H:%M:%S.%f")
-	t_CRC = t_UTC.replace(tzinfo=pytz.UTC).astimezone(timezone(CRC_Format)).strftime("%Y-%m-%dT%H:%M:%S.%f")
+	t_CRC = t_UTC.replace(tzinfo=pytz.UTC).astimezone(timezone(CRC_Timezone)).strftime("%Y-%m-%dT%H:%M:%S.%f")
 	t_dia = t_CRC.split("T")[0] + "T" + hour
 	datetime_creado = datetime.strptime(t_dia, "%Y-%m-%dT%H:%M:%S")
 	return datetime_creado
@@ -97,7 +97,7 @@ if __name__ == "__main__":
 	#Por lo tanto hay que convertirla de str a datetime.datetime
 	t_UTC = datetime.strptime(time_now_UTC, "%Y-%m-%d %H:%M:%S.%f")
 	#Convertir time_now_UTC a zona horaria de America/Regina por ejemplo:
-	time_now_CRC = t_UTC.replace(tzinfo=pytz.UTC).astimezone(timezone(CRC_Format)).strftime(timestamp_format)
+	time_now_CRC = t_UTC.replace(tzinfo=pytz.UTC).astimezone(timezone(CRC_Timezone)).strftime(timestamp_format)
 	time_now_Phoenix = t_UTC.replace(tzinfo=pytz.UTC).astimezone(timezone(Phoenix_Format)).strftime(timestamp_format)
 	os.write(sys.stdout.fileno(), ("El número de día UTC hoy es: \t" + str(t_UTC.isoweekday()) + "\n").encode('utf-8'))
 	os.write(sys.stdout.fileno(), ("Tiempo en UTC: \t\t\t\t\t" + str(time_now_UTC)).encode('utf-8'))
