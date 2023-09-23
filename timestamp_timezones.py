@@ -49,8 +49,8 @@ def get_year_dif(t_now, t_stamp_format, t_diff):
 
 def get_month_dif(t_now, t_stamp_format, t_diff):
 	timestamp = datetime.strptime(t_now, t_stamp_format) if isinstance(t_now, str) else t_now
-	other_year = timestamp + relativedelta(months=t_diff)
-	return str(other_year)
+	other_month = timestamp + relativedelta(months=t_diff)
+	return str(other_month)
 
 def get_month_dif_beginning(t_now, t_stamp_format, t_diff):
 	timestamp = datetime.strptime(t_now, t_stamp_format) if isinstance(t_now, str) else t_now
