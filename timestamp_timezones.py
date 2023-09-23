@@ -20,13 +20,14 @@ nombre_del_mes = {1:"Enero", 2:"Febrero", 3:"Marzo", 4:"Abril", 5:"Mayo", 6:"Jun
 				  7:"Julio", 8:"Agosto", 9:"Setiembre", 10:"Octubre",
 				  11:"Noviembre", 12:"Diciembre"}
 
-def get_year(t_now, t_stamp_format):
 nombre_de_la_semana = {1:"Lunes", 2:"Martes", 3:"Miércoles", 4:"Jueves",
 					   5:"Viernes", 6:"Sábado", 7:"Domingo"}
 
+def get_year(t_now):
+	t_stamp_format = check_timestamp_format(t_now)
 	timestamp = datetime.strptime(t_now, t_stamp_format) if isinstance(t_now, str) else t_now
 	year = timestamp.year
-	return str(year)
+	return year
 
 def get_month(t_now, t_stamp_format):
 	timestamp = datetime.strptime(t_now, t_stamp_format) if isinstance(t_now, str) else t_now
