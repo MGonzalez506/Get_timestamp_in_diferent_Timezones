@@ -118,3 +118,9 @@ class TestTimestamp(unittest.TestCase):
 			self.assertTrue(False)
 
 		self.assertTrue(True)
+
+if __name__ == '__main__':
+	print("\n\n\n")
+	print("Iniciando unit test...")
+	# Create unit test
+	unittest.main()
