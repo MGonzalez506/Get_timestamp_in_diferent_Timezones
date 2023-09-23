@@ -10,7 +10,7 @@ import fcntl
 import string
 import re
 
-from timestamp_timezones import *
+from manejartiempo import *
 
 if __name__ == "__main__":
 	# Imprimir título
