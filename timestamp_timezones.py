@@ -16,8 +16,6 @@ from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
 from pytz import timezone
 
-CRC_Format = 'America/Costa_Rica'
-Phoenix_Format = 'America/Phoenix'
 
 def get_year(t_now, t_stamp_format):
 	timestamp = datetime.strptime(t_now, t_stamp_format) if isinstance(t_now, str) else t_now
