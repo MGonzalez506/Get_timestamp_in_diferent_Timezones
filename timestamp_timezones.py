@@ -67,6 +67,27 @@ def get_UTC_Now(t_stamp_format):
 def convert_timestampSTR_to_timestampDateTime(timestamp, timestamp_format):
 	return datetime.strptime(timestamp, timestamp_format)
 
+def check_timestamp_format(timestamp):
+	timestamp_str = ""
+	# Check if timestamp is datetime.datetime object
+	if isinstance(timestamp, datetime):
+		# Convert from datetime.datetime object to string
+		timestamp_str = str(timestamp)
+	else:
+		timestamp_str = timestamp
+	
+	# Check if the timestamp contains decimals
+	if "." in timestamp_str:
+		if "T" in timestamp_str:
+			return "%Y-%m-%dT%H:%M:%S.%f"
+		else:
+			return "%Y-%m-%d %H:%M:%S.%f"
+	else:
+		if "T" in timestamp_str:
+			return "%Y-%m-%dT%H:%M:%S"
+		else:
+			return "%Y-%m-%d %H:%M:%S"
+
 def join_hour_to_today(hour, zona_horaria):
 	#Ingresa la hora a la que quieres añadir a la fecha
 	#Sale el datetime correspondiente que se ha creado
