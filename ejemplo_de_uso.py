@@ -26,3 +26,6 @@ if __name__ == "__main__":
 	#Se obtiene timestamp actual en UTC en formato string
 	time_now_UTC = get_UTC_Now(timestamp_format)
 	
+	#Por lo tanto hay que convertirla de str a datetime.datetime
+	t_UTC = convert_timestampSTR_to_timestampDateTime(time_now_UTC, timestamp_format)
+
