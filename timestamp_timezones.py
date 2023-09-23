@@ -54,8 +54,8 @@ def get_month_dif(t_now, t_stamp_format, t_diff):
 
 def get_month_dif_beginning(t_now, t_stamp_format, t_diff):
 	timestamp = datetime.strptime(t_now, t_stamp_format) if isinstance(t_now, str) else t_now
-	other_year = timestamp + relativedelta(months=t_diff)
-	return str(other_year.replace(day=1, hour=0, minute=0, second=0, microsecond=0))
+	other_month = timestamp + relativedelta(months=t_diff)
+	return str(other_month.replace(day=1, hour=0, minute=0, second=0, microsecond=0))
 
 def get_TStamp_with_TZone_from_UTC(t_now, t_stamp_format, zona_horaria):
 	timestamp = datetime.strptime(t_now, t_stamp_format) if isinstance(t_now, str) else t_now
