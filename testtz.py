@@ -6,7 +6,7 @@ import logging
 import unittest
 
 # Import the functions to test
-from timestamp_timezones import *
+from manejartiempo import *
 
 # Get the current directory
 THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
