@@ -154,6 +154,12 @@ def convert_from_timezone_to_timezone(timestamp, timestamp_format, input_timezon
 	#===========================================================
 	# FUNCTION
 	#===========================================================
+	# Check if timestamp is datetime.datetime object
+	if isinstance(timestamp, datetime):
+		# Convert from datetime.datetime object to string
+		timestamp = timestamp.strftime(timestamp_format)
+	else:
+		timestamp = timestamp
 	# Convert the timestamp to datetime.datetime object
 	timestamp = datetime.strptime(timestamp, timestamp_format)
 	# Convert the timestamp to the input_timezone
