@@ -20,3 +20,6 @@ if __name__ == "__main__":
 		.encode('utf-8')
 		)
 	
+	#Establecer el formato de timestamp que se desea:
+	timestamp_format = "%Y-%m-%d %H:%M:%S.%f"
+	
