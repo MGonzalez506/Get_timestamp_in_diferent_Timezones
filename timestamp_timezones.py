@@ -85,6 +85,59 @@ def get_timestamp_and_weekday(utc_or_other):
 
 
 
+# Create a function that gets the timezone and the format of a timestamp
+def get_timestamp_format_timezone_and_numberOfDecimalPoints(timestamp,default_tz):
+	# t_stamp string
+	t_stamp = ""
+
+	#===========================================================
+	# OUTPUT VARIABLES
+	#===========================================================
+	# default_tz: the timezone where the program is running.
+	# In case that the timestamp doesn't have a timezone, the default_tz will be used
+	timezone = default_tz
+	# timestamp_format: the format of the timestamp
+	timestamp_format = ""
+	# number_of_decimal_points: the number of decimal points in the timestamp
+	number_of_decimal_points = 0
+
+	#===========================================================
+	# FUNCTION
+	#===========================================================
+	# Check if t_stamp is datetime.datetime object
+	if isinstance(t_stamp, datetime):
+		# Convert from datetime.datetime object to string
+		t_stamp = timestamp.isoformat(timespec='microseconds')
+	else:
+		t_stamp = timestamp
+
+	# Check if the timestamp contains the letter "Z" at the end
+	if t_stamp[-1] == "Z":
+		timezone = "UTC+00:00"
+	elif t_stamp[-6] == "+":
+		timezone = "UTC" + t_stamp[-6:]
+	elif t_stamp[-6] == "-":
+		timezone = "UTC" + t_stamp[-6:]
+	
+	# Check if the timestamp contains the "." character
+	if "." in t_stamp:
+		number_of_decimal_points = len(t_stamp.split(".")[1])
+		# Check if the timestamp contains the letter "T" character
+		if "T" in t_stamp:
+			timestamp_format = "%Y-%m-%dT%H:%M:%S.%f"
+		else:
+			timestamp_format = "%Y-%m-%d %H:%M:%S.%f"
+	else:
+		# Check if the timestamp contains the letter "T" character
+		if "T" in t_stamp:
+			timestamp_format = "%Y-%m-%dT%H:%M:%S"
+		else:
+			timestamp_format = "%Y-%m-%d %H:%M:%S"
+
+	#===========================================================
+	# RETURN
+	#===========================================================
+	return timestamp_format, timezone, number_of_decimal_points
 if __name__ == "__main__":
 	# Solamente para imprimir un título
 	os.write(sys.stdout.fileno(), "\n######### Obtener timestamp con zonas horarias #########\n\n".encode('utf-8'))
