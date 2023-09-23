@@ -138,6 +138,38 @@ def get_timestamp_format_timezone_and_numberOfDecimalPoints(timestamp,default_tz
 	# RETURN
 	#===========================================================
 	return timestamp_format, timezone, number_of_decimal_points
+
+def convert_from_timezone_to_timezone(timestamp, timestamp_format, input_timezone, output_timezone):
+	#===========================================================
+	# INPUT VARIABLES
+	#===========================================================
+	# timestamp: the timestamp to convert
+	# timestamp_format: the format of the timestamp
+	# input_timezone: the timezone of the timestamp
+	# output_timezone: the timezone to convert the timestamp
+
+	#===========================================================
+	# OUTPUT VARIABLES
+	#===========================================================
+	# timestamp_converted: the timestamp converted to the output_timezone
+
+	#===========================================================
+	# FUNCTION
+	#===========================================================
+	# Convert the timestamp to datetime.datetime object
+	timestamp = datetime.strptime(timestamp, timestamp_format)
+	# Convert the timestamp to the input_timezone
+	timestamp = timestamp.replace(tzinfo=pytz.timezone(input_timezone))
+	# Convert the timestamp to the output_timezone
+	timestamp_converted = timestamp.astimezone(pytz.timezone(output_timezone))
+	# Convert the timestamp to string
+	timestamp_converted = timestamp_converted.strftime(timestamp_format)
+
+	#===========================================================
+	# RETURN
+	#===========================================================
+	return timestamp_converted
+
 if __name__ == "__main__":
 	# Solamente para imprimir un título
 	os.write(sys.stdout.fileno(), "\n######### Obtener timestamp con zonas horarias #########\n\n".encode('utf-8'))
