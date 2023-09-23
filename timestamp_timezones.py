@@ -44,6 +44,7 @@ def get_day(t_now):
 def get_year_dif(t_now, t_stamp_format, t_diff):
 	timestamp = datetime.strptime(t_now, t_stamp_format) if isinstance(t_now, str) else t_now
 	other_year = timestamp + relativedelta(years=t_diff)
+	# Return other_year as datetime.datetime object
 	return str(other_year)
 
 def get_month_dif(t_now, t_stamp_format, t_diff):
