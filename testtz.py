@@ -118,6 +118,67 @@ class TestTimestamp(unittest.TestCase):
 			self.assertTrue(False)
 
 		self.assertTrue(True)
+	
+	# Test para unir hora con fecha
+	def test_join_hour_to_date(self):
+		json_data = {}
+		try:
+			input_file = THIS_FOLDER + '/test_data.json'
+			# Import json data from input_file
+			with open(input_file, 'r') as f:
+				json_data = json.load(f)
+				# Close file
+				f.close()
+
+			#data = json.load(open(input_file, 'r'))
+		except Exception as e:
+			t_actual = get_UTC_Now("%Y-%m-%dT%H:%M:%S")
+			log_msg = "---> T_UTC: " + t_actual + " - There is something wrong in file: " + os.path.basename(input_file) + " - Check if json format is ok, if file is empty or if the file exists."
+			logging.error(log_msg)
+			self.assertTrue(False)
+		
+		# Create empty list for same_format_different_tz data
+		join_hour_to_date_data = []
+		# Check if data is not empty
+		if json_data:
+			# Get joining_hour_to_date data
+			join_hour_to_date_data = json_data["joining_hour_to_date"]
+			# Get the number of elements inside the joining_hour_to_date tag
+			num_elements = len(join_hour_to_date_data)
+			if num_elements != 0:
+				for i in range(num_elements):
+					# Get the input fecha
+					in_f = join_hour_to_date_data[i]['fecha']
+					# Get the input hora
+					in_h = join_hour_to_date_data[i]['hora']
+					# Get the input timestamp format
+					in_t_format = join_hour_to_date_data[i]['timestamp_format_in']
+					# Get the output timestamp format
+					out_t_format = join_hour_to_date_data[i]['timestamp_format_out']
+					
+					# Get the expected timestamp
+					expected_timestamp = join_hour_to_date_data[i]['output_timestamp']
+
+					# Join the hour to the date
+					out_timestamp = join_hour_to_date(in_f, in_h, in_t_format, out_t_format)
+
+					# Compare the expected timestamp with the converted timestamp
+					self.assertTrue (out_timestamp == expected_timestamp)
+			else:
+				# Log that there where no information in the tag inside the json file
+				t_actual = get_UTC_Now("%Y-%m-%dT%H:%M:%S")
+				log_msg = "---> T_UTC: " + t_actual + " - No data on the tag 'joining_hour_to_date' inside document: " + os.path.basename(input_file)
+				logging.error(log_msg)
+				self.assertTrue(False)
+		else:
+			# Log that there where no information in the tag inside the json file
+			t_actual = get_UTC_Now("%Y-%m-%dT%H:%M:%S")
+			log_msg = "---> T_UTC: " + t_actual + " - No data inside document: " + os.path.basename(input_file)
+			logging.error(log_msg)
+			self.assertTrue(False)
+		
+		self.assertTrue(True)
+
 
 if __name__ == '__main__':
 	print("\n\n\n")
