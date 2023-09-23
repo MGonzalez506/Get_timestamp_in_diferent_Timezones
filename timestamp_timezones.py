@@ -51,6 +51,9 @@ def get_TStamp_with_TZone_from_UTC(t_now, t_stamp_format, zona_horaria):
 def get_UTC_Now(t_stamp_format):
 	return datetime.strptime(datetime.utcnow().isoformat(timespec='microseconds'), "%Y-%m-%dT%H:%M:%S.%f").strftime(t_stamp_format)
 
+def convert_timestampSTR_to_timestampDateTime(timestamp, timestamp_format):
+	return datetime.strptime(timestamp, timestamp_format)
+
 def join_hour_to_today(hour):
 	global CRC_Format
 	#Ingresa la hora a la que quieres añadir a la fecha
@@ -62,7 +65,6 @@ def join_hour_to_today(hour):
 	t_dia = t_CRC.split("T")[0] + "T" + hour
 	datetime_creado = datetime.strptime(t_dia, "%Y-%m-%dT%H:%M:%S")
 	return datetime_creado
-
 
 def get_timestamp_and_weekday(utc_or_other):
 	#No ingresa nada
@@ -82,10 +84,6 @@ def get_timestamp_and_weekday(utc_or_other):
 	datos_de_retorno.append(iso_week_day)
 	return datos_de_retorno
 
-
-
-
-# Create a function that gets the timezone and the format of a timestamp
 def get_timestamp_format_timezone_and_numberOfDecimalPoints(timestamp,default_tz):
 	# t_stamp string
 	t_stamp = ""
