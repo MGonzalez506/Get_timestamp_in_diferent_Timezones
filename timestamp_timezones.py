@@ -177,8 +177,6 @@ if __name__ == "__main__":
 	timestamp_format = "%Y-%m-%d %H:%M:%S.%f"
 	#Se obtiene time_now en UTC en formato string
 	time_now_UTC = get_UTC_Now(timestamp_format)
-	print(get_timestamp_and_weekday("America/New_York"))
-	print("\n\n")
 	#Por lo tanto hay que convertirla de str a datetime.datetime
 	t_UTC = datetime.strptime(time_now_UTC, "%Y-%m-%d %H:%M:%S.%f")
 	#Convertir time_now_UTC a zona horaria de America/Regina por ejemplo:
