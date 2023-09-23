@@ -9,3 +9,6 @@ import signal
 import fcntl
 import string
 import re
+from timestamp_timezones import *
+
+if __name__ == "__main__":
