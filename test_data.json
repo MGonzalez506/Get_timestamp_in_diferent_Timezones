@@ -74,5 +74,37 @@
 			"timestamp_format":"%Y-%m-%dT%H:%M:%S.%f",
 			"number_of_decimal_points":6
 		}
+	],
+	"joining_hour_to_date":
+	[
+		{
+			"fecha":"09/02/2020",
+			"hora":"13:20:32",
+			"timestamp_format_in":"%d/%m/%Y %H:%M:%S",
+			"timestamp_format_out":"%Y-%m-%d %H:%M:%S",
+			"output_timestamp":"2020-02-09 13:20:32"
+		},
+		{
+			"fecha":"04/09/23",
+			"hora":"06:54:54",
+			"timestamp_format_in":"%d/%m/%y %H:%M:%S",
+			"timestamp_format_out":"%Y-%m-%d %H:%M:%S",
+			"output_timestamp":"2023-09-04 06:54:54"
+		},
+		{
+			"fecha":"04/09/23",
+			"hora":"06:54:57",
+			"timestamp_format_in":"%d/%m/%y %H:%M:%S",
+			"timestamp_format_out":"%Y-%m-%d %H:%M:%S",
+			"output_timestamp":"2023-09-04 06:54:57"
+		},
+		{
+			"fecha":"04/09/23",
+			"hora":"06:55:00",
+			"timestamp_format_in":"%d/%m/%y %H:%M:%S",
+			"timestamp_format_out":"%Y-%m-%d %H:%M:%S",
+			"output_timestamp":"2023-09-04 06:55:00"
+		}
 	]
+
 }

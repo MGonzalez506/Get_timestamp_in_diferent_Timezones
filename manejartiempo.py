@@ -99,6 +99,16 @@ def join_hour_to_today(hour, zona_horaria):
 	datetime_creado = datetime.strptime(t_dia, "%Y-%m-%dT%H:%M:%S")
 	return datetime_creado
 
+def join_hour_to_date(date, hour, in_timestamp_format, out_timestamp_format):
+	#Ingresa la fecha y la hora a la que quieres añadir a la fecha
+	#Sale el datetime correspondiente que se ha creado
+
+	t_dia = date + " " + hour
+	datetime_creado = datetime.strptime(t_dia, in_timestamp_format)
+	output_timestamp = datetime_creado.strftime(out_timestamp_format)
+	# Se regresa en formato datetime
+	return output_timestamp
+
 def get_timestamp_and_weekday(utc_or_other):
 	#No ingresa nada
 	#Retorna un array con el timestamp y el weekday
