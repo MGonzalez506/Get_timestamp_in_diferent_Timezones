@@ -67,14 +67,13 @@ def get_UTC_Now(t_stamp_format):
 def convert_timestampSTR_to_timestampDateTime(timestamp, timestamp_format):
 	return datetime.strptime(timestamp, timestamp_format)
 
-def join_hour_to_today(hour):
-	global CRC_Format
+def join_hour_to_today(hour, zona_horaria):
 	#Ingresa la hora a la que quieres añadir a la fecha
 	#Sale el datetime correspondiente que se ha creado
 
 	time_now_UTC = datetime.utcnow().isoformat(timespec='microseconds')
 	t_UTC = datetime.strptime(time_now_UTC, "%Y-%m-%dT%H:%M:%S.%f")
-	t_CRC = t_UTC.replace(tzinfo=pytz.UTC).astimezone(timezone(CRC_Format)).strftime("%Y-%m-%dT%H:%M:%S.%f")
+	t_CRC = t_UTC.replace(tzinfo=pytz.UTC).astimezone(timezone(zona_horaria)).strftime("%Y-%m-%dT%H:%M:%S.%f")
 	t_dia = t_CRC.split("T")[0] + "T" + hour
 	datetime_creado = datetime.strptime(t_dia, "%Y-%m-%dT%H:%M:%S")
 	return datetime_creado
