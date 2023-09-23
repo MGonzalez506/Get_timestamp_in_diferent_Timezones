@@ -29,10 +29,12 @@ def get_year(t_now):
 	year = timestamp.year
 	return year
 
-def get_month(t_now, t_stamp_format):
+def get_month(t_now):
+	t_stamp_format = check_timestamp_format(t_now)
 	timestamp = datetime.strptime(t_now, t_stamp_format) if isinstance(t_now, str) else t_now
 	month = timestamp.month
-	return str(month)
+	return month, nombre_del_mes[month]
+
 
 def get_year_dif(t_now, t_stamp_format, t_diff):
 	timestamp = datetime.strptime(t_now, t_stamp_format) if isinstance(t_now, str) else t_now
