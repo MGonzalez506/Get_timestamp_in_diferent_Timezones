@@ -16,8 +16,14 @@ from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
 from pytz import timezone
 
+nombre_del_mes = {1:"Enero", 2:"Febrero", 3:"Marzo", 4:"Abril", 5:"Mayo", 6:"Junio",
+				  7:"Julio", 8:"Agosto", 9:"Setiembre", 10:"Octubre",
+				  11:"Noviembre", 12:"Diciembre"}
 
 def get_year(t_now, t_stamp_format):
+nombre_de_la_semana = {1:"Lunes", 2:"Martes", 3:"Miércoles", 4:"Jueves",
+					   5:"Viernes", 6:"Sábado", 7:"Domingo"}
+
 	timestamp = datetime.strptime(t_now, t_stamp_format) if isinstance(t_now, str) else t_now
 	year = timestamp.year
 	return str(year)
