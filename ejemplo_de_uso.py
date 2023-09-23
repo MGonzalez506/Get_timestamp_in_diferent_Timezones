@@ -23,3 +23,6 @@ if __name__ == "__main__":
 	#Establecer el formato de timestamp que se desea:
 	timestamp_format = "%Y-%m-%d %H:%M:%S.%f"
 	
+	#Se obtiene timestamp actual en UTC en formato string
+	time_now_UTC = get_UTC_Now(timestamp_format)
+	
