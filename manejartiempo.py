@@ -57,6 +57,11 @@ def get_month_dif_beginning(t_now, t_stamp_format, t_diff):
 	other_month = timestamp + relativedelta(months=t_diff)
 	return str(other_month.replace(day=1, hour=0, minute=0, second=0, microsecond=0))
 
+def get_fraction_of_second_difference(t1, t2, t_stamp_format):
+	timestamp1 = datetime.strptime(t1, t_stamp_format) if isinstance(t1, str) else t1
+	timestamp2 = datetime.strptime(t2, t_stamp_format) if isinstance(t2, str) else t2
+	return (timestamp2 - timestamp1).total_seconds()
+
 def get_TStamp_with_TZone_from_UTC(t_now, t_stamp_format, zona_horaria):
 	timestamp = datetime.strptime(t_now, t_stamp_format) if isinstance(t_now, str) else t_now
 	return str(timestamp.replace(tzinfo=pytz.UTC).astimezone(timezone(zona_horaria)).strftime(t_stamp_format))
